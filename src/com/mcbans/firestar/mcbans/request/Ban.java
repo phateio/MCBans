@@ -108,7 +108,9 @@ public class Ban implements Runnable {
             // Call BanEvent
             if (action_id != 3){
                 PlayerBanEvent banEvent = new PlayerBanEvent(playerName, playerUUID, playerIP, senderName, senderUUID, reason, action_id, duration, measure);
-                plugin.getServer().getPluginManager().callEvent(banEvent);
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    plugin.getServer().getPluginManager().callEvent(banEvent);
+                }, 1);
                 if (banEvent.isCancelled()){
                     return;
                 }
@@ -157,7 +159,9 @@ public class Ban implements Runnable {
     public void unBan() {
         // Call PlayerUnbanEvent
         PlayerUnbanEvent unBanEvent = new PlayerUnbanEvent(playerName, playerUUID, senderName, senderUUID);
-        plugin.getServer().getPluginManager().callEvent(unBanEvent);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            plugin.getServer().getPluginManager().callEvent(unBanEvent);
+        }, 1);
         if (unBanEvent.isCancelled()){
             return;
         }
@@ -194,7 +198,9 @@ public class Ban implements Runnable {
                 
             }
             Util.broadcastMessage(ChatColor.GREEN + _("unBanSuccess", I18n.PLAYER, playerName, I18n.SENDER, senderName));
-            plugin.getServer().getPluginManager().callEvent(new PlayerUnbannedEvent(playerName, playerUUID, senderName, senderUUID));
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                plugin.getServer().getPluginManager().callEvent(new PlayerUnbannedEvent(playerName, playerUUID, senderName, senderUUID));
+            }, 1);
 
             log.info(senderName + " unbanned " + playerName + "!");
             return;
@@ -211,7 +217,9 @@ public class Ban implements Runnable {
     public void localBan() {
         // Call PlayerLocalBanEvent
         PlayerLocalBanEvent lBanEvent = new PlayerLocalBanEvent(playerName, playerUUID, playerIP, senderName, senderUUID, reason);
-        plugin.getServer().getPluginManager().callEvent(lBanEvent);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            plugin.getServer().getPluginManager().callEvent(lBanEvent);
+        }, 1);
         if (lBanEvent.isCancelled()){
             return;
         }
@@ -252,7 +260,9 @@ public class Ban implements Runnable {
             if (response.get("result").equals("y")) {
                 this.kickPlayer(playerName, playerUUID, _("localBanPlayer", I18n.PLAYER, playerName, I18n.SENDER, senderName, I18n.REASON, reason, I18n.IP, playerIP));
                 Util.broadcastMessage(ChatColor.GREEN + _("localBanSuccess", I18n.PLAYER, playerName, I18n.SENDER, senderName, I18n.REASON, reason, I18n.IP, playerIP));
-                plugin.getServer().getPluginManager().callEvent(new PlayerBannedEvent(playerName, playerIP, senderName, reason, action_id, duration, measure));
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    plugin.getServer().getPluginManager().callEvent(new PlayerBannedEvent(playerName, playerIP, senderName, reason, action_id, duration, measure));
+                }, 1);
 
                 log.info(playerName + " has been banned with a local type ban [" + reason + "] [" + senderName + "]!");
                 return;
@@ -277,7 +287,9 @@ public class Ban implements Runnable {
     public void globalBan() {
         // Call PlayerGlobalBanEvent
         PlayerGlobalBanEvent gBanEvent = new PlayerGlobalBanEvent(playerName, playerUUID, playerIP, senderName, senderUUID, reason);
-        plugin.getServer().getPluginManager().callEvent(gBanEvent);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            plugin.getServer().getPluginManager().callEvent(gBanEvent);
+        }, 1);
         if (gBanEvent.isCancelled()){
             return;
         }
@@ -330,7 +342,9 @@ public class Ban implements Runnable {
             if (response.get("result").equals("y")) {
                 this.kickPlayer(playerName, playerUUID, _("globalBanPlayer", I18n.PLAYER, playerName, I18n.SENDER, senderName, I18n.REASON, reason, I18n.IP, playerIP));
                 Util.broadcastMessage(ChatColor.GREEN + _("globalBanSuccess", I18n.PLAYER, playerName, I18n.SENDER, senderName, I18n.REASON, reason, I18n.IP, playerIP));
-                plugin.getServer().getPluginManager().callEvent(new PlayerBannedEvent(playerName, playerIP, senderName, reason, action_id, duration, measure));
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    plugin.getServer().getPluginManager().callEvent(new PlayerBannedEvent(playerName, playerIP, senderName, reason, action_id, duration, measure));
+                }, 1);
 
                 log.info(playerName + " has been banned with a global type ban [" + reason + "] [" + senderName + "]!");
                 return;
@@ -360,7 +374,9 @@ public class Ban implements Runnable {
     public void tempBan() {
         // Call PlayerTempBanEvent
         PlayerTempBanEvent tBanEvent = new PlayerTempBanEvent(playerName, playerUUID, playerIP, senderName, senderUUID, reason, duration, measure);
-        plugin.getServer().getPluginManager().callEvent(tBanEvent);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            plugin.getServer().getPluginManager().callEvent(tBanEvent);
+        }, 1);
         if (tBanEvent.isCancelled()){
             return;
         }
@@ -400,7 +416,9 @@ public class Ban implements Runnable {
             if (response.get("result").equals("y")) {
                 this.kickPlayer(playerName, playerUUID, _("tempBanPlayer", I18n.PLAYER, playerName, I18n.SENDER, senderName, I18n.REASON, reason, I18n.IP, playerIP));
                 Util.broadcastMessage(ChatColor.GREEN + _("tempBanSuccess", I18n.PLAYER, playerName, I18n.SENDER, senderName, I18n.REASON, reason, I18n.IP, playerIP));
-                plugin.getServer().getPluginManager().callEvent(new PlayerBannedEvent(playerName, playerIP, senderName, reason, action_id, duration, measure));
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    plugin.getServer().getPluginManager().callEvent(new PlayerBannedEvent(playerName, playerIP, senderName, reason, action_id, duration, measure));
+                }, 1);
 
                 log.info(playerName + " has been banned with a temp type ban [" + reason + "] [" + senderName + "]!");
                 return;
